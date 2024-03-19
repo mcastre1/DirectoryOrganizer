@@ -8,11 +8,17 @@ according to the files extensions found in the given directory.
 
 
 class DirectoryOrganizer():
-    def __init__(self, dir=".") -> None:
+    def __init__(self, dir=".", dest_dir="./folders") -> None:
         self.dir = dir
+        self.dest_dir = dest_dir
 
     def run(self):
         files = os.listdir(self.dir)
+
+        if os.path.exists(self.dest_dir):
+            print("Exists")
+        else:
+            os.mkdir(self.dest_dir)
 
         for file in files:
             splitup_path = os.path.splitext(file)
