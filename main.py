@@ -13,20 +13,20 @@ class DirectoryOrganizer():
         self.dest_dir = dest_dir
 
     def run(self):
+        # List of all files found in the given directory.
         files = os.listdir(self.dir)
 
-        if os.path.exists(self.dest_dir):
-            print("Exists")
-        else:
+        # If the destination folder does not exists, create it.
+        if not os.path.exists(self.dest_dir):
             os.mkdir(self.dest_dir)
 
         # Here we iterate through all files in the specified directory in init.
         for file in files:
             # We split up the file name
-            splitup_path = os.path.splitext(file)
-            file_name = splitup_path[0]  # Save the file name on this variable.
+            splitup_name = os.path.splitext(file)
+            file_name = splitup_name[0]  # Save the file name on this variable.
             # Save the file extension on this variable.
-            file_extension = splitup_path[1]
+            file_extension = splitup_name[1]
 
             # We check if the file we are working on has an extension.
             if file_extension:
@@ -40,8 +40,9 @@ class DirectoryOrganizer():
                 # For us to use in the future.
                 if not os.path.exists(new_path):
                     os.mkdir(new_path)
-                else:  # If the path, folder already exists, then we move the current file there.
-                    pass
+                # If folder already exists or it was just made, we move the file there.
+                os.rename(os.path.join(self.dir, file),
+                          os.path.join(new_path, file))
 
             print(f"File Name: {file_name}\n" +
                   f"File Extension: {file_extension}")
